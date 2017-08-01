@@ -4,16 +4,15 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const server = require('../server');
 const saveTestData = require('../seed/test.seed');
-mongoose.Promise = global.Promise;
 
 describe('API', function () {
-  let usefulData;
+  // let usefulData;
   beforeEach(done => {
     mongoose.connection.dropDatabase()
       .then(saveTestData)
-      .then(data => {
-        usefulData = data;
-        console.log(usefulData);
+      .then(() => {
+        // usefulData = data;
+       // console.log(usefulData);
         done();
       })
       .catch(done);
@@ -27,6 +26,21 @@ describe('API', function () {
           else {
             expect(res.status).to.equal(200);
             expect(res.body).to.equal('All good!');
+            done();
+          }
+        });
+    });
+  });
+  // Topics
+  describe('GET /api/topics', function () {
+    it('responds with status code 200 and get TOPICS', function (done) {
+      request(server).get('/api/topics')
+        .end((err, res) => {
+          if (err) done(err);
+          else {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.be.an('array');
+            expect(res.body.length).to.equal(3);
             done();
           }
         });
