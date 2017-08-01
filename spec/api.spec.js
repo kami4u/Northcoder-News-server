@@ -26,6 +26,7 @@ describe('API', function () {
           if (err) done(err);
           else {
             expect(res.status).to.equal(200);
+            expect(res.body).to.equal('All good!');
             done();
           }
         });

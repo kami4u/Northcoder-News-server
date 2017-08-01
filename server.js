@@ -8,13 +8,14 @@ const config = require('./config');
 const db = config.DB[process.env.NODE_ENV] || process.env.DB;
 const PORT = config.PORT[process.env.NODE_ENV] || process.env.PORT;
 
-mongoose.connect(db, () => {
-  console.log('connected to db');
+mongoose.connect(db, function (err) {
+  if (!err) console.log(`connected to the Database: ${db}`);
+  else console.log(`error connecting to the Database ${err}`);
 });
 
 app.use(bodyParser.json());
 app.get('/', function (req, res) {
-  res.status(200).send('All good!');
+  res.status(200).json('All good!');
 });
 
 app.use('/api', function () {});
