@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
 
-const { getTopics } = require('./controllers');
+const { getTopics, getArticleByTopicId } = require('./controllers');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 app.get('/', function (req, res) {res.status(200).json('All good!');});
 
 app.get('/api/topics', getTopics);
+app.get('/api/topics/:topic_id/articles', getArticleByTopicId);
 
 app.use((err,req, res, next) => { 
   if (err.status === 500) {res.status(500).json({message: err.message});}
