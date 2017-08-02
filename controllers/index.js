@@ -29,3 +29,18 @@ exports.getCommentsByArticleId = (req, res, next) => {
         res.status(200).json(comment);
     });
 };
+
+exports.addCommentToArticle = (req, res, next) => {
+    const id = req.params.article_id;
+    const newComment = new Comments({
+        body: req.body.body,
+        belongs_to: id
+    });
+    newComment.save()
+        .then(() => {
+            res.status(200).json(newComment);
+        })
+        .catch(() => {
+            next({status: 500, message: 'Internal server error'});
+        });
+};

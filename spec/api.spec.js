@@ -91,4 +91,21 @@ describe('API', function () {
         });
     });
   });
+  // add comments
+  describe('POST /api/articles/:article_id/comments', function () {
+    it('responds with status code 200 and it is an array', function (done) {
+      request(server)
+        .post(`/api/articles/5980a610204f1f41a51238e1/comments`)
+        .send({
+          body: 'new comment bro!!',
+          belongs_to: '5980a610204f1f41a51238e1'
+        })
+        .expect(200)
+        .end((err, res) => {
+         expect(res.body).to.be.an('object');
+          expect(res.body.body).to.equal('new comment bro!!');
+          done();
+        });
+    });
+  });
 });
