@@ -61,16 +61,16 @@ describe('API', function () {
         });
     });
   });
-  // get Article By Topic id
-  describe('GET /api/topics/:topic_id/articles', function () {
-    it('responds with status code 200 and get ARTICLE', function (done) {
-      request(server).get('/api/topics/football/articles')
+  // Articles
+  describe('GET /api/articles', function () {
+    it('responds with status code 200 and get ARTICLES', function (done) {
+      request(server).get('/api/articles')
         .end((err, res) => {
           if (err) done(err);
           else {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an('array');
-            expect(res.body.length).to.equal(1);
+            expect(res.body.length).to.equal(2);
             done();
           }
         });
