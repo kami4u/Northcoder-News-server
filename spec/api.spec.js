@@ -6,12 +6,12 @@ const server = require('../server');
 const saveTestData = require('../seed/test.seed');
 
 describe('API', function () {
-  let usefulData;
+  // let usefulData;
   beforeEach(done => {
     mongoose.connection.dropDatabase()
       .then(saveTestData)
-      .then((data) => {
-       usefulData = data;
+      .then(() => {
+       // usefulData = data;
        // console.log(usefulData);
         done();
       })
@@ -108,11 +108,11 @@ describe('API', function () {
         });
     });
   });
-  // UP/DOWN vote comment
-  describe('PUT /api/comments/:comment_id', function () {
+  // up/down vote article
+  describe('PUT /api/articles/:article_id', function () {
     it('responds with status code 200', function (done) {
       request(server)
-        .put(`/api/comments/${usefulData.comment_id}?vote=up`)
+        .put(`/api/articles/5980a610204f1f41a5123905?vote=up`)
         .expect(200)
         .end(() => {
           done();
