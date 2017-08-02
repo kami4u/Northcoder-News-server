@@ -1,4 +1,4 @@
-const { Topics, Articles } = require('../models/models');
+const { Topics, Articles, Comments } = require('../models/models');
 
 exports.getTopics = (req, res, next) => {
     Topics.find({}, function (err, topic) {
@@ -19,5 +19,13 @@ exports.getArticles = (req, res, next) => {
     Articles.find({}, function (err, article) {
         if (err) return next({status: 404, message: 'Page not found!!!'});
         res.status(200).json(article);
+    });
+};
+
+exports.getCommentsByArticleId = (req, res, next) => {
+    const id = req.params.article_id;
+    Comments.find({ belongs_to: id }, function (err, comment) {
+        if (err) return next({status: 404, message: 'Page not found!!!!'});
+        res.status(200).json(comment);
     });
 };
