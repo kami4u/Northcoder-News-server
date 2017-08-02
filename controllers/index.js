@@ -12,6 +12,12 @@ exports.getArticleByTopicId = (req, res, next) => {
     Articles.find({ belongs_to: id }, function (err, article) {
         if (err) return next({status: 404, message: 'Page not found!!!'});
         res.status(200).json(article);
-        });
-   
+    });
+};
+
+exports.getArticles = (req, res, next) => {
+    Articles.find({}, function (err, article) {
+        if (err) return next({status: 404, message: 'Page not found!!!'});
+        res.status(200).json(article);
+    });
 };
