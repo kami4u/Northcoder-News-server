@@ -59,3 +59,18 @@ exports.updateArticleVote = (req, res, next) => {
         }
     });
 };
+
+exports.updateCommentVote = (req, res, next) => {
+    const id = req.params.comment_id;
+    const {vote} = req.query;
+    if (!(vote === 'up' || vote === 'down')) {
+        return next({status: 404, message: 'Invalid entry'});
+    }
+    const voteVal = vote === 'up' ? 1 : -1;
+    Comments.findByIdAndUpdate(id, { $inc: { votes: voteVal } },{new: true}, function (err, comment) {
+        if (err) return next({status: 404, message: 'page not found'});
+        else {
+            res.status(200).json(comment);
+        }
+    });
+};

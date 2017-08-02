@@ -119,4 +119,15 @@ describe('API', function () {
         });
     });
   });
+  // UP/DOWN vote comment
+  describe('PUT /api/comments/:comment_id', function () {
+    it('responds with status code 200 and it is an array', function (done) {
+      request(server)
+        .put(`/api/comments/5980a610204f1f41a5123905?vote=up`)
+        .expect(200)
+        .end(() => {
+          done();
+        });
+    });
+  });
 });
