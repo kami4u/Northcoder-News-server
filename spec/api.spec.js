@@ -131,7 +131,7 @@ describe('API', function () {
     });
   });
   describe('delete /api/comment/:comment_id', function () {
-    it('responds with status code 200 and it is an array', function (done) {
+    it('responds with status code 200', function (done) {
       request(server)
         .delete(`/api/comments/${usefulIds.comment_id}`)
         .expect(200)

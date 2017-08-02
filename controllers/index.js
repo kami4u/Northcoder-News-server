@@ -1,4 +1,4 @@
-const { Topics, Articles, Comments } = require('../models/models');
+const { Topics, Articles, Comments, Users } = require('../models/models');
 
 exports.getTopics = (req, res, next) => {
     Topics.find({}, function (err, topic) {
@@ -87,4 +87,18 @@ exports.deleteComment = (req, res, next) => {
                 next({status: 500, message: 'Internal server error'});
             });
     });
+};
+
+exports.getUsers = (req, res, next) => {
+    const username = req.params.username;
+    Users.find({username: username})
+        .then((user) => {
+            if (user.length < 1) {
+               next({status: 404, message: 'page not found'});
+            }
+            res.status(200).json({user});
+        })
+        .catch(() => {
+            next({status: 500, message: 'Internal server error'});
+        });
 };
