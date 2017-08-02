@@ -44,3 +44,18 @@ exports.addCommentToArticle = (req, res, next) => {
             next({status: 500, message: 'Internal server error'});
         });
 };
+
+exports.updateArticleVote = (req, res, next) => {
+    const id = req.params.article_id;
+    const {vote} = req.query;
+    if (!(vote === 'up' || vote === 'down')) {
+        return next({status: 404, message: 'Invalid entry'});
+    }
+    const voteVal = vote === 'up' ? 1 : -1;
+    Articles.findByIdAndUpdate(id, { $inc: { votes: voteVal } },{new: true}, function (err, comment) {
+        if (err) return next({status: 404, message: 'page not found'});
+        else {
+            res.status(200).json(comment);
+        }
+    });
+};

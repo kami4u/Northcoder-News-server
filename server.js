@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
 
-const { getTopics, getArticleByTopicId, getArticles, getCommentsByArticleId, addCommentToArticle } = require('./controllers');
+const { getTopics, getArticleByTopicId, getArticles, getCommentsByArticleId, addCommentToArticle, updateArticleVote } = require('./controllers');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -24,6 +24,7 @@ app.get('/api/topics/:topic_id/articles', getArticleByTopicId);
 app.get('/api/articles', getArticles);
 app.get('/api/articles/:article_id/comments', getCommentsByArticleId);
 app.post('/api/articles/:article_id/comments', addCommentToArticle);
+app.put('/api/articles/:article_id', updateArticleVote);
 
 app.use((err,req, res, next) => { 
   if (err.status === 500) {res.status(500).json({message: err.message});}
