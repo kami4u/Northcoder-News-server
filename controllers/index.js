@@ -74,3 +74,17 @@ exports.updateCommentVote = (req, res, next) => {
         }
     });
 };
+
+exports.deleteComment = (req, res, next) => {
+    const id = req.params.comment_id;
+    Comments.findById(id, function (err, comment) {
+        if (err) return next({status: 404, message: 'page not found'});
+        comment.remove()
+            .then(() => {
+                res.status(200).json(comment);
+            })
+            .catch(() => {
+                next({status: 500, message: 'Internal server error'});
+            });
+    });
+};
